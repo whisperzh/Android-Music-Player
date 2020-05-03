@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#202020" />
+
+    <RelativeLayout
+        android:id="@+id/music_relativelayout"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="#121212">
+
+        <ImageView
+            android:id="@+id/hide_music_page"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentLeft="true"
+            android:layout_margin="10dp"
+            android:src="@drawable/icon_arrow_down" />
+
+        <TextView
+            android:id="@+id/music_title_tv"
+            android:layout_width="match_parent"
+            android:layout_height="28dp"
+            android:layout_toRightOf="@+id/hide_music_page"
+            android:text="周杰伦"
+            android:textColor="#ffffff"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/music_artist_tv"
+            android:layout_width="match_parent"
+            android:layout_height="22dp"
+            android:layout_below="@+id/music_title_tv"
+            android:layout_marginLeft="8dp"
+            android:layout_toRightOf="@+id/hide_music_page"
+            android:text="告白气球"
+            android:textColor="#ffffff"
+            android:textSize="15sp" />
+
+    </RelativeLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="520dp"
+        android:layout_above="@+id/bt_ct_bar"
+        android:layout_below="@+id/music_relativelayout"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="false"
+        android:gravity="center"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="false"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="0dp">
+
+        <ImageView
+            android:id="@+id/diskview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.633"
+            app:srcCompat="@mipmap/play_page_disc" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/bt_ct_bar"
+        android:layout_width="match_parent"
+        android:layout_height="149dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginBottom="0dp">
+
+        <SeekBar
+            android:id="@+id/Duration"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:forceDarkAllowed="false"
+            app:layout_constraintEnd_toStartOf="@+id/whole_Duration"
+            app:layout_constraintStart_toEndOf="@+id/current_time"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/current_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/whole_Duration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/play_button"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Duration"
+            app:srcCompat="@drawable/icon_pause"
+            tools:ignore="VectorDrawableCompat" />
+
+        <ImageView
+            android:id="@+id/preview_button"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginLeft="32dp"
+            android:soundEffectsEnabled="false"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/play_button"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Duration"
+            app:srcCompat="@android:drawable/ic_media_previous" />
+
+        <ImageView
+            android:id="@+id/next_button"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginRight="32dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/play_button"
+            app:layout_constraintTop_toBottomOf="@+id/Duration"
+            app:srcCompat="@android:drawable/ic_media_next" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</RelativeLayout>
