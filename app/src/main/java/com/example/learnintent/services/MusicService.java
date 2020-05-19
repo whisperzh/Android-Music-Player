@@ -91,7 +91,7 @@ public class MusicService extends Service {
             mediaPlayer = new MediaPlayer();
             try {
                 try {
-                    MusicActivity.pauseImgv.setImageResource(R.drawable.icon_pause);
+                    MusicActivity.pauseImgv.setImageResource(R.drawable.play_pause);
                     Log.e("-38","92行");
                 } catch (NullPointerException e) {
                 }
@@ -113,7 +113,7 @@ public class MusicService extends Service {
         isStop = true;
         if (mediaPlayer.isPlaying()) {
             mediaPlayer.pause();
-            MusicActivity.pauseImgv.setImageResource(R.drawable.icon_play);
+            MusicActivity.pauseImgv.setImageResource(R.drawable.play_btn_play);
         }
     }
 
@@ -121,7 +121,7 @@ public class MusicService extends Service {
     public static void CONTINUE() {
         if (!mediaPlayer.isPlaying() && isStop) {
             mediaPlayer.start();
-            MusicActivity.pauseImgv.setImageResource(R.drawable.icon_pause);
+            MusicActivity.pauseImgv.setImageResource(R.drawable.play_pause);
         }
         isStop = false;
     }
@@ -137,12 +137,12 @@ public class MusicService extends Service {
         if (input == 0)//开始播放
         {
             try {
-                MusicActivity.pauseImgv.setImageResource(R.drawable.icon_pause);
+                MusicActivity.pauseImgv.setImageResource(R.drawable.play_pause);
             } catch (NullPointerException e) {
             }
         } else {
             try {
-                MusicActivity.pauseImgv.setImageResource(R.drawable.icon_play);
+                MusicActivity.pauseImgv.setImageResource(R.drawable.play_btn_play);
             } catch (NullPointerException e) {
             }
         }

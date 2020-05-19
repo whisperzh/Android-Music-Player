@@ -28,6 +28,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import static android.view.animation.Animation.INFINITE;
+import static com.example.learnintent.utils.ResUtils.fetchfromDB;
 import static com.example.learnintent.utils.ResUtils.getmusic;
 import static com.example.learnintent.utils.ResUtils.loadCover;
 
@@ -78,7 +79,8 @@ public class MusicActivity extends AppCompatActivity {
         context=getBaseContext();
         sharedPreferences = this.getSharedPreferences("whatisplaying.txt", Context.MODE_PRIVATE);
         bindID();
-        getmusic(getBaseContext());//绑定控件！！！
+        if(ResUtils.songlist==null)
+            ResUtils.songlist=fetchfromDB(ResUtils.dbHelper.getWritableDatabase());
         upDateUi();
         //new MusicThread().start();//启动线程
         setPicForDiskView();
@@ -222,9 +224,9 @@ public class MusicActivity extends AppCompatActivity {
         DurationBar.setMax(song.duration);
         currentTime.setText(formatTime(MusicService.mediaPlayer.getCurrentPosition()));
         if (MusicService.mediaPlayer.isPlaying())
-            pauseImgv.setImageResource(R.drawable.icon_pause);
+            pauseImgv.setImageResource(R.drawable.play_pause);
         else
-            pauseImgv.setImageResource(R.drawable.icon_play);
+            pauseImgv.setImageResource(R.drawable.play_btn_play);
         DurationBar.setProgress(MusicService.mediaPlayer.getCurrentPosition());
 //        if(objectAnimator!=null)
 //            objectAnimator.pause();

@@ -68,7 +68,7 @@ public class singer_Fragment extends Fragment {
             } while (cursor.moveToNext());
         }
         cursor.close();
-
+        singerbase.close();
 //        Iterator<Singer> it = singers.iterator();
 //        while (it.hasNext()) {
 //            String str = it.next().name;
@@ -89,6 +89,7 @@ public class singer_Fragment extends Fragment {
             count++;
         }
         c.close();
+        db.close();
         return count;
     }
 

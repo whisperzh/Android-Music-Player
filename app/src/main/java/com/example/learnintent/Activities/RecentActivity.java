@@ -11,6 +11,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.learnintent.Adaptor.MusicListAdaptor;
+import com.example.learnintent.DataBase.DatabaseHelper;
 import com.example.learnintent.R;
 import com.example.learnintent.utils.ResUtils;
 
@@ -46,8 +47,10 @@ private ListView recentList;
     }
 
     private void makelist(){
+        if(ResUtils.dbHelper==null)
+            ResUtils.dbHelper= DatabaseHelper.getInstance(this);
         List temp= ResUtils.popSTACK(getBaseContext());
-        MusicListAdaptor adaptor=new MusicListAdaptor(this,temp);
+        MusicListAdaptor adaptor=new MusicListAdaptor(this,temp,R.layout.recent_music_page,this);
         recentList.setAdapter(adaptor);
     }
 

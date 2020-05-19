@@ -41,13 +41,13 @@ public class LockScreenActivity extends AppCompatActivity {
         //使该Activity在锁屏界面上面显示，别忘了给视频通话的Activity也加上
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
         setContentView(R.layout.lock);
-        lockView=findViewById(R.id.lockImage);
         init();
         new TimeThread().start();
         lockScreenActivity=this;
     }
 
     private void init(){
+        lockView=findViewById(R.id.lockImage);
         dateText=findViewById(R.id.datetext);
         timeText =findViewById(R.id.timetext);
         songtext =findViewById(R.id.coversongName);

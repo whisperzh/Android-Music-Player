@@ -1,6 +1,8 @@
 package com.example.learnintent.Activities;
 
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -17,6 +19,8 @@ import com.example.learnintent.Fragments.PlayBarFragment;
 import com.example.learnintent.Fragments.singer_Fragment;
 import com.example.learnintent.Fragments.singleSong_Fragments;
 import com.example.learnintent.R;
+import com.example.learnintent.entity.Song;
+import com.example.learnintent.utils.ResUtils;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
@@ -64,7 +68,15 @@ public class LocalActivity extends BaseActivity {
         titleList.add("单曲");
         titleList.add("歌手");
         if (singleSong == null) {
+            List<Song> songlist=new ArrayList<Song>();
+            if(ResUtils.songlist==null)
+                songlist=ResUtils.fetchfromDB(getBaseContext());
+            else
+                songlist=ResUtils.songlist;
+            Bundle bundle = new Bundle();
+            bundle.putParcelableArrayList("list", (ArrayList<? extends Parcelable>)songlist );
             singleSong = new singleSong_Fragments();
+            singleSong.setArguments(bundle);
             fragments.add(singleSong);
         }
         if (singer_fragment == null) {

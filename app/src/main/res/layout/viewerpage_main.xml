@@ -41,7 +41,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/imageButton"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/imageView"
+            app:layout_constraintStart_toEndOf="@+id/startimg"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
@@ -56,7 +56,7 @@
             app:srcCompat="@android:drawable/ic_media_play" />
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/startimg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"

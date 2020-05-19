@@ -13,20 +13,21 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.learnintent.Adaptor.MyPageAdaptor;
-import com.example.learnintent.DataBase.DatabaseHelper;
 import com.example.learnintent.Fragments.PlayBarFragment;
 import com.example.learnintent.R;
+import com.example.learnintent.services.MusicService;
 import com.example.learnintent.utils.ResUtils;
 import com.master.permissionhelper.PermissionHelper;
 
@@ -37,6 +38,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     //===============学习drawerLayerOUT=========================//
     private DrawerLayout drawerLayout;
+    private ImageView settings;
     private ConstraintLayout constraintLayout;
     private TextView Mine, Search;
     public static int oldclick = -1;
@@ -60,6 +62,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.drawer_layoutlearn);
+        boolean isVIP=getIntent().getBooleanExtra("isVIP",false);
+        getSharedPreferences("systemP", Context.MODE_PRIVATE).edit().putBoolean("isLogin", isVIP).commit();
         sharedPreferences=getSharedPreferences("FirstTime", Context.MODE_PRIVATE);
         isFirst= sharedPreferences.getBoolean("isFirst",true);
         getPemitted();
@@ -103,6 +107,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     private void init() {
+
         Mine = findViewById(R.id.MINE);
         Search = findViewById(R.id.SEARCH);
         Mine.setOnClickListener(this);
@@ -113,7 +118,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         LayoutInflater inflater = getLayoutInflater();
         view1 = inflater.inflate(R.layout.home_p1, null);
         view2 = inflater.inflate(R.layout.layout2, null);
-        //view3 = inflater.inflate(R.layout.layout3, null);
+        settings=findViewById(R.id.setting_image);
+        settings.setOnClickListener(this);
         pages = new ArrayList<View>();// 将要分页显示的View装入数组中
         pages.add(view1);
         pages.add(view2);
@@ -151,6 +157,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.setting_image:
+                Intent intent0=new Intent(this, SettingsActivity.class);
+                startActivity(intent0);
+                break;
             case R.id.MINE:
                 //实现点击TextView切换fragment
                 viewPager.setCurrentItem(0);
@@ -213,6 +223,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         }
 
+    }
+
+    public boolean onKeyDown(int keyCode, KeyEvent event)//------------监听系统返回键 不作处理wkxboot2014.8.13
+    {
+        // TODO Auto-generated method stub
+        if(keyCode == KeyEvent.KEYCODE_BACK)
+        {
+            return  true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
 }

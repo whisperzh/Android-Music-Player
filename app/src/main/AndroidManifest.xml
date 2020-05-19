@@ -17,9 +17,8 @@
         android:theme="@style/AppTheme">
 
         <service android:name=".services.MusicService" />
-
         <activity
-            android:name=".Activities.MainActivity"
+            android:name=".Activities.LoginActivity"
             android:launchMode="singleTop"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -27,6 +26,17 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".Activities.MainActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/AppTheme.NoActionBar">
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
         </activity>
         <activity
             android:name=".Activities.MusicActivity"
@@ -37,16 +47,6 @@
                 <category android:name="my_category" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-            <!-- <intent-filter> -->
-
-
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-
-
-            <!-- </intent-filter> -->
 
         </activity>
         <activity
@@ -72,6 +72,10 @@
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".Activities.LockScreenActivity"
+            android:launchMode="singleTask"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".Activities.SettingsActivity"
             android:launchMode="singleTask"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>

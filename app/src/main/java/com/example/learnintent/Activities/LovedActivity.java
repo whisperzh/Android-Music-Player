@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
 import com.example.learnintent.Adaptor.MusicListAdaptor;
+import com.example.learnintent.DataBase.DatabaseHelper;
 import com.example.learnintent.R;
 import com.example.learnintent.utils.ResUtils;
 
@@ -24,7 +25,7 @@ public class LovedActivity  extends BaseActivity  {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setTitle("最近播放");
+            actionBar.setTitle("我的喜爱");
         }
         makelist();
     }
@@ -43,7 +44,11 @@ public class LovedActivity  extends BaseActivity  {
     }
 
     private void makelist(){
-
+        if(ResUtils.dbHelper==null)
+                ResUtils.dbHelper= DatabaseHelper.getInstance(this);
+        List temp=ResUtils.GetLovedSong(ResUtils.dbHelper.getWritableDatabase());
+        MusicListAdaptor adaptor=new MusicListAdaptor(this,temp,R.layout.loved_activity,this);
+        lovedlist.setAdapter(adaptor);
     }
 
 }

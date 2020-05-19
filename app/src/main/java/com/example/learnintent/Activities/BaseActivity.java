@@ -23,16 +23,15 @@ public abstract class BaseActivity extends AppCompatActivity {
     public void show(){
         fragmentManager=getSupportFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
-        if (playBarFragment == null) {
-            playBarFragment = PlayBarFragment.newInstance();
-            ft.replace(R.id.fragment_playbar, playBarFragment).commit();
-        }else {
-//            playBarFragment.getFragmentManager().beginTransaction().remove(playBarFragment);
-//            playBarFragment.isDetached();
-//           ft.show(playBarFragment).commit();
-            playBarFragment = PlayBarFragment.newInstance();
-            ft.replace(R.id.fragment_playbar, playBarFragment).commit();
-        }
+//        if (playBarFragment == null) {
+//            playBarFragment = PlayBarFragment.newInstance();
+//            ft.replace(R.id.fragment_playbar, playBarFragment).commit();
+//        }else {
+//            playBarFragment = PlayBarFragment.newInstance();
+//            ft.replace(R.id.fragment_playbar, playBarFragment).commit();
+//        }
+        playBarFragment = PlayBarFragment.newInstance();
+        ft.replace(R.id.fragment_playbar, playBarFragment).commit();
 
     }
 

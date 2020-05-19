@@ -56,7 +56,7 @@ public class ResUtils {
                         song.songName = str[1];
                         song.bitmap = loadCover(song.path);
                         songlist.add(song);
-                        SONGBASE.insert("local_base", null, songToValue(song));
+                        SONGBASE.insert("local_base", null, songToValue(song,false));
                         // Cursor sc=SONGBASE.query("local_base",new String[]{"songName"},null,null,null,null,null);
 //                        if(sc.moveToNext())
 //                        {
@@ -73,15 +73,15 @@ public class ResUtils {
     }
 
     //    转换歌曲时间的格式
-    public static String formatTime(int time) {
-        if (time / 1000 % 60 < 10) {
-            String tt = time / 1000 / 60 + ":0" + time / 1000 % 60;
-            return tt;
-        } else {
-            String tt = time / 1000 / 60 + ":" + time / 1000 % 60;
-            return tt;
-        }
-    }
+//    public static String formatTime(int time) {
+//        if (time / 1000 % 60 < 10) {
+//            String tt = time / 1000 / 60 + ":0" + time / 1000 % 60;
+//            return tt;
+//        } else {
+//            String tt = time / 1000 / 60 + ":" + time / 1000 % 60;
+//            return tt;
+//        }
+//    }
 
     public static Bitmap loadCover(String path) {
         MediaMetadataRetriever mediaMetadataRetriever = new MediaMetadataRetriever();
@@ -130,17 +130,17 @@ public class ResUtils {
         }
     }
 
-    public static ContentValues songToValue(Song song) {
+    public static ContentValues songToValue(Song song, boolean isLiked) {
         ContentValues values = new ContentValues();
         values.put("songName", song.songName);
         values.put("singerName", song.singer);
         values.put("duration",song.duration);
         values.put("path", song.path);
-        values.put("isLiked", false);
+        values.put("isLiked", isLiked);
         return values;
     }
 
-    public static List fetchfromDB(SQLiteDatabase db) {
+    public static List<Song> fetchfromDB(SQLiteDatabase db) {
         List<Song> l = new ArrayList();
         Cursor cursor = db.query("local_base", null, null, null, null, null, null);
         Song temp;
@@ -156,6 +156,30 @@ public class ResUtils {
             } while (cursor.moveToNext());
         }
         cursor.close();
+        db.close();
+        return l;
+    }
+
+    public static List<Song> fetchfromDB(Context context) {
+        List<Song> l = new ArrayList();
+        if(dbHelper==null)
+            dbHelper = new DatabaseHelper(context, "LOCAL", null, 1);
+        SQLiteDatabase db=dbHelper.getWritableDatabase();
+        Cursor cursor = db.query("local_base", null, null, null, null, null, null);
+        Song temp;
+        if (cursor.moveToFirst()) {
+            do {
+                temp = new Song();
+                temp.songName = cursor.getString(cursor.getColumnIndex("songName"));
+                temp.singer = cursor.getString(cursor.getColumnIndex("singerName"));
+                temp.path = cursor.getString(cursor.getColumnIndex("path"));
+                temp.duration=Integer.parseInt(cursor.getString(cursor.getColumnIndex("duration")));
+                temp.isliked = cursor.getInt(cursor.getColumnIndex("isLiked")) != 0;
+                l.add(temp);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
         return l;
     }
 
@@ -197,14 +221,6 @@ public class ResUtils {
 
     }
 
-    public static void initSTACK(){
-        SharedPreferences sharedPreferences= MusicService.sp;
-        sharedPreferences.edit().putInt("song1",-1).commit();
-        sharedPreferences.edit().putInt("song2",-1).commit();
-        sharedPreferences.edit().putInt("song3",-1).commit();
-
-    }
-
     public static List popSTACK(Context context){
         List poplist=new ArrayList();
         SharedPreferences sharedPreferences;
@@ -223,14 +239,65 @@ public class ResUtils {
             }
             else
             {
-                if(songlist==null)
-                    ResUtils.getmusic(context);
-                Song song=ResUtils.songlist.get(t);
+
+                Song song=ResUtils.fetchfromDB(ResUtils.dbHelper.getWritableDatabase()).get(t);
                 poplist.add(song);
             }
         }
         return poplist;
     }
 
+    public static List GetLovedSong(SQLiteDatabase db)
+    {
+        List<Song> l = new ArrayList();
+        Cursor cursor = db.query("liked_base", null, null, null, null, null, null);
+        Song temp;
+        if (cursor.moveToFirst()) {
+            do {
+                temp = new Song();
+                temp.songName = cursor.getString(cursor.getColumnIndex("songName"));
+                temp.singer = cursor.getString(cursor.getColumnIndex("singerName"));
+                temp.path = cursor.getString(cursor.getColumnIndex("path"));
+                temp.duration=Integer.parseInt(cursor.getString(cursor.getColumnIndex("duration")));
+                temp.isliked = cursor.getInt(cursor.getColumnIndex("isLiked")) != 0;
+                l.add(temp);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return l;
+    }
 
+    public static void putLovedSong(SQLiteDatabase db,Song s){
+        db.insert("liked_base", null, songToValue(s,true));
+        String []sn=new String[]{s.songName};
+
+        db.update("local_base",songToValue(s,true),"songName=?",sn);
+        db.close();
+    }
+
+    public static void deletLovedSong(SQLiteDatabase db,Song song)
+    {
+        String []songName=new String[]{song.songName};
+        db.delete("liked_base","songName=?",songName);
+        db.update("local_base",songToValue(song,false),"songName=?",songName);
+        String deleSQL="DELETE FROM Websites WHERE name='"+songName+"'";
+        db.close();
+    }
+
+    public static boolean ifLike(Song song,SQLiteDatabase db)
+    {
+        String sql = "select * from liked_base where songName=?";
+        Cursor cursor = db.rawQuery(sql, new String[]{song.songName});
+
+      if(cursor.moveToFirst())
+       do{
+           cursor.close();
+           db.close();
+           return true;
+       }while(cursor.moveToNext());
+        cursor.close();
+        db.close();
+        return false;
+    }
 }

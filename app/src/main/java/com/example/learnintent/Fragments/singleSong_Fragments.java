@@ -49,6 +49,7 @@ public class singleSong_Fragments extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        songs=getArguments().getParcelableArrayList("list");
         final View view = inflater.inflate(R.layout.list_view_page1, container, false);
         init(view);
         return view;
@@ -60,10 +61,10 @@ public class singleSong_Fragments extends Fragment {
     }
 
     public void fetchSongs() {
-        SQLiteDatabase db = ResUtils.dbHelper.getReadableDatabase();
-        songs = ResUtils.fetchfromDB(db);
+        //SQLiteDatabase db = ResUtils.dbHelper.getReadableDatabase();
+        //songs = ResUtils.fetchfromDB(db);
         try {
-            MusicListAdaptor myAdapter = new MusicListAdaptor(getContext(), songs);
+            MusicListAdaptor myAdapter = new MusicListAdaptor(getContext(), songs,R.layout.local_music_page,this.getActivity());
             SongsView.setAdapter(myAdapter);
             SongsView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
